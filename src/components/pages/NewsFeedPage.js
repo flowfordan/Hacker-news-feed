@@ -1,3 +1,4 @@
+import { NewsFeedItem } from '../NewsFeedItem/NewsFeedItem'
 import styles from './NewsFeedPage.module.css'
 
 
@@ -15,12 +16,7 @@ export const NewsFeedPage = () => {
 
     const renderList = myList.map((item, idx) => {
         return (
-        <li key={idx}>
-            <span>{item.title}</span>
-            <span>{item.rating}</span>
-            <span>{item.author}</span>
-            <span>{item.date}</span>
-        </li>
+        <NewsFeedItem data={item} key={idx}/>
         )
     })
 

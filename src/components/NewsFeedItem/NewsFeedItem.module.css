@@ -1,0 +1,26 @@
+.cardWrapper{
+    display: grid;
+    grid-template-areas: 
+    "title title rate"
+    "link link link"
+    "author . date";
+    background-color: antiquewhite;
+    padding: 20px;
+    border: 1px solid black;
+}
+
+.title{
+    grid-area: title;
+}
+
+.link{
+    grid-area: link;
+}
+
+.author{
+    grid-area: author;
+}
+
+.date{
+    grid-area: date;
+}
