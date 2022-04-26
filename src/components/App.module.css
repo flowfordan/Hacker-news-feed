@@ -1,0 +1,19 @@
+.appWrapper{
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: 
+  "head head head"
+  ". body .";
+}
+
+
+
+.appHeader{
+  grid-area: head;
+}
+
+.appBody{
+  grid-area: body;
+}

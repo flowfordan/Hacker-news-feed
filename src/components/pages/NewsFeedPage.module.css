@@ -1,0 +1,12 @@
+.feedWrapper{
+    min-height: 100%;
+    min-height: 100%;
+    display: grid;
+    grid-template-areas: 
+    ". list .";
+    grid-template-columns: auto minmax(400px, 1100px) auto;
+}
+
+.newsList{
+    grid-area: list;
+}
