@@ -3,16 +3,12 @@ import { NewsFeedItem } from '../NewsFeedItem/NewsFeedItem';
 import styles from './NewsFeedPage.module.css';
 import { APIService } from '../../services/apiService';
 
-
+const apiService = new APIService();
 
 
 export const NewsFeedPage = () => {
 
-    const apiService = new APIService();
-
-
     
-
     const myList = [
         {id: 1, title: 'hello', rating: 6, author: 'Boris', date: 'today'},
         {id: 2, title: 'hello', rating: 6, author: 'Boris', date: 'today'},
@@ -21,13 +17,8 @@ export const NewsFeedPage = () => {
         {id: 5, title: 'hello', rating: 6, author: 'Boris', date: 'today'},
     ]
 
-
-    
-
-
     const [storiesIds, setIds] = useState(null)
     const [isLoading, toggleLoading] = useState(false)
-    console.log(storiesIds)
 
 
     useEffect(
@@ -35,7 +26,6 @@ export const NewsFeedPage = () => {
 
             apiService.getStoriesList()
             .then(data => {
-                console.log(data)
                 setIds(data)
             })
            

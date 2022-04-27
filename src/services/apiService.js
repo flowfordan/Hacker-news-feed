@@ -1,4 +1,4 @@
-import { responsiveProperty } from "@mui/material/styles/cssUtils";
+import { timeConverter } from "../utils/timeConverter";
 import axios from "axios";
 
 export class APIService {
@@ -11,11 +11,33 @@ export class APIService {
     getStoriesList = async() => {
         const storiesUrl = `/newstories.json`;
         const response = await axios.get(`${this._baseUrl}${storiesUrl}`)
-        console.log(response)
         
         if(response.status === 200){
             const limitedCount = response.data.slice(0, 100);
             return limitedCount
+        }
+    }
+
+    getStoryData = async(id) => {
+        const storyUrl = `/item/${id}.json`;
+        const response = await axios.get(`${this._baseUrl}${storyUrl}`)
+        
+        if(response.status === 200){
+            return this._transformStoryData(response.data)
+        }
+    }
+
+    _transformStoryData = (data) => {
+        //transform time stamp
+        const unixTime = data.time
+        return {
+            author: data.by,
+            id: data.id,
+            comments: data.kids,
+            rating: data.score,
+            date: timeConverter(unixTime),
+            title: data.title,
+            url: data.url
         }
     }
 
