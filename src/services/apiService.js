@@ -82,6 +82,8 @@ export class APIService {
             text: decodeHtml(data.text),
             date: timeConverter(unixTime),
             deleted: data.deleted,
+            dateRaw: data.time,
+            answers: null
         }
     }
 
