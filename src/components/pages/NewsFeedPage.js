@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { NewsFeedItem } from '../NewsFeedItem/NewsFeedItem';
 import styles from './NewsFeedPage.module.css';
 import { APIService } from '../../services/apiService';
+import { Link } from 'react-router-dom';
 
 const apiService = new APIService();
+
 
 
 export const NewsFeedPage = () => {
@@ -49,7 +51,9 @@ export const NewsFeedPage = () => {
     if(storiesIds){
     renderList = storiesIds.map((item, idx) => {
         return (
-        <NewsFeedItem key={idx} storyId={item}/>
+        <Link key={item} to={`/story/${item}`}>
+            <NewsFeedItem  storyId={item} extended={false}/>
+        </Link>
         )
     })}
     

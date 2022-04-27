@@ -23,6 +23,7 @@ export class APIService {
         const response = await axios.get(`${this._baseUrl}${storyUrl}`)
         
         if(response.status === 200){
+            console.log('loading')
             return this._transformStoryData(response.data)
         }
     }

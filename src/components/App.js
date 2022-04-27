@@ -13,7 +13,7 @@ function App() {
       <div className={styles.appBody}>
         <Routes>
           <Route path='/' element={<NewsFeedPage />}/>
-          <Route path='/news/:newId' element={<NewsItemPage />}/>
+          <Route path='/story/:storyId' element={<NewsItemPage />}/>
           <Route path='*' element={<div>404</div>}/>
         </Routes>
       </div>

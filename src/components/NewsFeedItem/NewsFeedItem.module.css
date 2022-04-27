@@ -1,9 +1,10 @@
 .cardWrapper{
     display: grid;
     grid-template-areas: 
-    "title title rate"
-    "link link link"
-    "author . date";
+    "title title title title"
+    "link link link link"
+    "author . date rate";
+    grid-template-columns: 1fr auto auto auto;
     background-color: antiquewhite;
     padding: 20px;
     border: 1px solid black;
@@ -23,4 +24,8 @@
 
 .date{
     grid-area: date;
+}
+
+.rate{
+    grid-area: rate;
 }
