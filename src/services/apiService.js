@@ -49,8 +49,17 @@ export class APIService {
         }
     }
 
+    getRootComment = async(id) => {
+        const commentUrl = `/item/${id}.json`;
+        const response = await axios.get(`${this._baseUrl}${commentUrl}`
+        , { signal: this.itemController.signal })
+        
+        if(response.status === 200){
+            return this._transformCommentData(response.data)
+        }
+    }
+
     _transformStoryData = (data) => {
-        //transform time stamp
         const unixTime = data.time
         return {
             author: data.by,
@@ -60,6 +69,18 @@ export class APIService {
             date: timeConverter(unixTime),
             title: data.title,
             url: data.url
+        }
+    }
+
+    _transformCommentData = (data) => {
+        const unixTime = data.time
+        return {
+            author: data.by,
+            id: data.id,
+            children: data.kids,
+            parent: data.parent,
+            text: data.text,
+            date: timeConverter(unixTime),
         }
     }
 
