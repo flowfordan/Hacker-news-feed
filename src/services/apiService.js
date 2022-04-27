@@ -1,4 +1,5 @@
 import { timeConverter } from "../utils/timeConverter";
+import { decodeHtml } from "../utils/decodeHTMLText";
 import axios from "axios";
 
 export class APIService {
@@ -78,7 +79,7 @@ export class APIService {
             id: data.id,
             children: data.kids,
             parent: data.parent,
-            text: data.text,
+            text: decodeHtml(data.text),
             date: timeConverter(unixTime),
             deleted: data.deleted,
         }

@@ -43,7 +43,7 @@ export const ItemComments = (props) => {
             return(
                 <div key={item.id} className={styles.commentWrapper}>
                     <div>{item.author}</div>
-                    <div>{item.text}</div>
+                    <div dangerouslySetInnerHTML={{ __html: item.text}}></div>
                     <div>{item.date}</div>
                     <div></div>
                 </div>
