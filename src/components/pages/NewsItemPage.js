@@ -14,7 +14,6 @@ export const NewsItemPage = () => {
 
     //get id from url
     const itemId = useParams().storyId
-    console.log(itemId)
 
     const [storyData, setData] = useState({
         id: itemId,

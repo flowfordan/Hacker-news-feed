@@ -33,7 +33,6 @@ export class APIService {
         , { signal: this.itemController.signal })
         
         if(response.status === 200){
-            console.log('loading')
             return this._transformStoryData(response.data)
         }
     }
@@ -44,7 +43,6 @@ export class APIService {
         , { signal: this.itemController.signal })
         
         if(response.status === 200){
-            console.log('loading')
             return this._transformStoryData(response.data)
         }
     }
@@ -53,6 +51,7 @@ export class APIService {
         const commentUrl = `/item/${id}.json`;
         const response = await axios.get(`${this._baseUrl}${commentUrl}`
         , { signal: this.itemController.signal })
+
         
         if(response.status === 200){
             return this._transformCommentData(response.data)
@@ -81,6 +80,7 @@ export class APIService {
             parent: data.parent,
             text: data.text,
             date: timeConverter(unixTime),
+            deleted: data.deleted,
         }
     }
 
