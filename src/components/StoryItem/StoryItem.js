@@ -8,41 +8,16 @@ const apiService = new APIService();
 export const StoryItem = (props) => {
 
     
-    const {storyId} = props
-    console.log('item', storyId)
+    const {storyData} = props
+    console.log('item', storyData)
     
     
     //first it gets id from list component
     //sets id
     //makes api query to get data(title, author etc)
-    const [storyData, setData] = useState({
-        id: storyId,
-        author: null,
-        comments: null,
-        date: null,
-        rating: 0,
-        title: null,
-        url: null
-    })
+    
     const [isLoading, toggleLoading] = useState(true)
 
-    useEffect(
-        () => {
-            apiService.getStory(storyId)
-            .then(data => {
-                setData({
-                    id: data.id,
-                    author: data.author,
-                    comments: data.comments,
-                    date: data.date,
-                    rating: data.rating,
-                    title: data.title,
-                    url: data.url 
-                })
-                toggleLoading(false)
-            })
-        },
-        [])
 
     const { url, author, date, rating, title} = storyData
     return(
