@@ -1,7 +1,7 @@
 .appWrapper{
   min-height: 100vh;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto minmax(400px, 1200px) auto;
   grid-template-rows: auto 1fr;
   grid-template-areas: 
   "head head head"
@@ -12,6 +12,7 @@
 
 .appHeader{
   grid-area: head;
+  padding: 20px;
 }
 
 .appBody{
