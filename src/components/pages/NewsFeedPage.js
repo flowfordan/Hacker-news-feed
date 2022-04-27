@@ -25,15 +25,21 @@ export const NewsFeedPage = () => {
 
     useEffect(
         () => {
-
+            
             apiService.getStoriesList()
             .then(data => {
                 setIds(data)
             })
-           
         }, 
         []
     )
+
+    //on unmount
+    useEffect(() => () => {
+        return () => {
+            apiService.listController.abort()
+        }
+    }, [])
 
     useEffect(
         () => {

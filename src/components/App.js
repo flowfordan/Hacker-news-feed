@@ -2,8 +2,13 @@ import styles from './App.module.css';
 import { Routes, Route } from 'react-router-dom';
 import { NewsFeedPage } from './pages/NewsFeedPage';
 import { NewsItemPage } from './pages/NewsItemPage';
+import { useState } from 'react';
 
-function App() {
+const App = () => {
+
+
+
+  
   
   return (
     <div className={styles.appWrapper}>

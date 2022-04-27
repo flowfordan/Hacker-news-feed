@@ -6,6 +6,7 @@ import { NavLink, Link } from 'react-router-dom';
 const apiService = new APIService();
 
 export const ItemComments = (props) => {
+    console.log(props)
     return(
         <div>
             Comments
