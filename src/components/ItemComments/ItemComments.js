@@ -1,7 +1,6 @@
 import styles from './ItemComments.module.css';
 import { APIService } from '../../services/apiService';
 import { useEffect, useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
 import { unstable_composeClasses } from '@mui/material';
 
 const apiService = new APIService();

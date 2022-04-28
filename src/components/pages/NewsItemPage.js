@@ -25,9 +25,9 @@ export const NewsItemPage = () => {
         url: null
     })
 
-    useEffect(
-        () => {
-            apiService.getStory(itemId)
+
+    const getStoryData = () => {
+        apiService.getStory(itemId)
             .then(data => {
                 setData({
                     id: data.id,
@@ -40,6 +40,29 @@ export const NewsItemPage = () => {
                 })
                 
             })
+    };
+
+    const updComments = () => {
+        apiService.getStory(itemId)
+            .then(data => {
+                setData(storyData => {
+                    return {
+                    ...storyData,
+                    comments: data.comments, 
+                }})
+                
+            })
+    }
+
+    useEffect(
+        () => {
+            getStoryData();
+            let refreshTimer = setInterval(() => updComments(), 60000);
+
+            //on unmount
+            return () => {
+                clearInterval(refreshTimer);  
+            };
         },
         [])
 
@@ -54,7 +77,7 @@ export const NewsItemPage = () => {
                         Back
                     </button>
                 </Link>
-                <button>Refresh comments</button>
+                <button onClick={updComments}>Update comments</button>
                 </div>
             </div>
             <div className={styles.itemWrapper}>
