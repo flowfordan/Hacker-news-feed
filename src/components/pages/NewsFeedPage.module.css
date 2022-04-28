@@ -3,10 +3,26 @@
     min-height: 100%;
     display: grid;
     grid-template-areas: 
-    "list";
+    "refresh list";
+    grid-template-columns: auto 1fr;
     
 }
 
 .newsList{
     grid-area: list;
+}
+
+.refreshWrap{
+    grid-area: refresh;
+    background-color: aqua;
+    
+}
+
+.refreshBtn{
+    
+}
+
+.refreshSticky{
+    position: sticky;
+    top: 0;
 }

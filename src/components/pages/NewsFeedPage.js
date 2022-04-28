@@ -10,26 +10,24 @@ const apiService = new APIService();
 
 export const NewsFeedPage = () => {
 
-    
-    const myList = [
-        {id: 1, title: 'hello', rating: 6, author: 'Boris', date: 'today'},
-        {id: 2, title: 'hello', rating: 6, author: 'Boris', date: 'today'},
-        {id: 3, title: 'hello', rating: 6, author: 'Boris', date: 'today'},
-        {id: 4, title: 'hello', rating: 6, author: 'Boris', date: 'today'},
-        {id: 5, title: 'hello', rating: 6, author: 'Boris', date: 'today'},
-    ]
-
     const [storiesIds, setIds] = useState(null)
     const [isLoading, toggleLoading] = useState(false)
 
 
+
+    const loadStoriesIds = () => {
+        toggleLoading(true) 
+        apiService.getStoriesList()
+        .then(data => {
+            setIds(data)
+            toggleLoading(false) 
+        })
+    }
+
+
     useEffect(
         () => {
-            
-            apiService.getStoriesList()
-            .then(data => {
-                setIds(data)
-            })
+            loadStoriesIds()
         }, 
         []
     )
@@ -65,13 +63,26 @@ export const NewsFeedPage = () => {
     
 
     const PreloaderView = () => {
-        return isLoading? <span>Loading</span> : null
+        return (isLoading? <span>Loading stories</span> : null)
     }
+
+    
     
     
 
     return(
         <div className={styles.feedWrapper}>
+            <div className={styles.refreshWrap}>
+                <div className={styles.refreshSticky}>
+                    <button className={styles.refreshBtn}
+                    onClick={loadStoriesIds}>
+                        Refresh
+                    </button>
+                    <div>{isLoading? 'fetch': null}</div>
+
+                </div>
+                
+            </div>
             <ul className={styles.newsList}>
                 <PreloaderView />
                 {renderList}

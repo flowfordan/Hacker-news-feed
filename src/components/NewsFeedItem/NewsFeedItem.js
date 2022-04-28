@@ -7,7 +7,6 @@ const apiService = new APIService();
 export const NewsFeedItem = (props) => {
 
     const {storyId} = props
-    console.log('item', storyId)
     
     
     //first it gets id from list component
