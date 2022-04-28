@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { APIService } from '../../services/apiService';
 import { ItemComments } from '../ItemComments/ItemComments';
 import { NewsFeedItem } from '../NewsFeedItem/NewsFeedItem';
@@ -46,9 +46,21 @@ export const NewsItemPage = () => {
     
 
     return(
-        <div className={styles.itemWrapper}>
-            <StoryItem storyData={storyData}/>
-            <ItemComments commentsIds={storyData.comments}/>
+        <div className={styles.pageWrapper}>
+            <div className={styles.deskWrapper}>
+                <div className={styles.desk}>
+                <Link to='/'>
+                    <button>
+                        Back
+                    </button>
+                </Link>
+                <button>Refresh comments</button>
+                </div>
+            </div>
+            <div className={styles.itemWrapper}>
+                <StoryItem storyData={storyData}/>
+                <ItemComments commentsIds={storyData.comments}/>
+            </div>
         </div>
     )
 } 

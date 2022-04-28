@@ -1,4 +1,23 @@
+.pageWrapper{
+    display: grid;
+    gap: 20px;
+    grid-template-areas: 
+    "desk item";
+    grid-template-columns: auto 1fr;
+}
+
 .itemWrapper{
     display: grid;
     gap: 20px;
+    grid-area: item;
+}
+
+.deskWrapper{
+    grid-area: desk;
+    background-color: aquamarine;
+}
+
+.desk{
+    position: sticky;
+    top: 0;
 }
