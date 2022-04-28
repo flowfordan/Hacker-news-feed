@@ -29,7 +29,7 @@ export const NewsFeedPage = () => {
     useEffect(
         () => {
             loadStoriesIds();
-            let refreshTimer = setInterval(() => console.log('timer tick'), 5000);
+            let refreshTimer = setInterval(() => loadStoriesIds(), 60000);
 
             //on unmount
             return () => {
