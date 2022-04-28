@@ -10,10 +10,11 @@ const apiService = new APIService();
 
 export const NewsFeedPage = () => {
 
-    const [storiesIds, setIds] = useState(null)
-    const [isLoading, toggleLoading] = useState(false)
+    const [storiesIds, setIds] = useState(null);
+    const [isLoading, toggleLoading] = useState(false);
+    
 
-
+    
 
     const loadStoriesIds = () => {
         toggleLoading(true) 
@@ -27,17 +28,16 @@ export const NewsFeedPage = () => {
 
     useEffect(
         () => {
-            loadStoriesIds()
+            loadStoriesIds();
+            let refreshTimer = setInterval(() => console.log('timer tick'), 5000);
+
+            //on unmount
+            return () => {
+                clearInterval(refreshTimer);  
+            };
         }, 
         []
     )
-
-    //on unmount
-    useEffect(() => () => {
-        return () => {
-            apiService.listController.abort()
-        }
-    }, [])
 
     useEffect(
         () => {
