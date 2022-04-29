@@ -9,15 +9,34 @@ const apiService = new APIService();
 
 export const Comment = (props) => {
 
-    const {id, author, date, text, children, answers} = props.data
-    const {commentId} = props;
+    const {id, author, date, text, children} = props.data
+    
+    const [childs, setChilds] = useState([])
+    const [showChilds, toggleShowChilds] = useState(false)
 
-    const [commentData, setCommentData] = useState({})
+    const onAnswersShow = (childrenIds) => {
+
+            console.log('show childs:', childrenIds)
+            Promise.all(
+                childrenIds.map(id => {return apiService.getRootComment(id)})
+            ).then(data => {
+                setChilds(data)
+                console.log('from Promise all', data)
+            })
+    }
+
+    useEffect(
+        () => {
+            if(showChilds){
+                onAnswersShow(children)
+            }
+        }
+        ,
+        [showChilds])
 
 
-
-
-    //const {author, date, text, id, children} = commentData
+    console.log(children)
+    console.log(showChilds)
 
     return(
         <div className={styles.commentWrapper}>
@@ -26,24 +45,23 @@ export const Comment = (props) => {
                         <div>{author}</div>
                         <div dangerouslySetInnerHTML={{ __html: text}}></div>
                         <div>{date}</div>
-                        <div 
-                        onClick={() => {props.onAnswersShow(id, children)}}
-                        className={styles.showAnswers}>
-                            {children? 'show answers': null}
-                        </div>
+                            {children? <button onClick={() => toggleShowChilds(!showChilds)}
+                        className={styles.showAnswers}>{`show answers (${children.length})`}</button> 
+                            : null}
+                    
                     </div>
 
-                    {/* <div className={styles.children}>
-                        {answers? answers.map(child => {
+                    <div className={styles.children}>
+                        {showChilds? childs.map(child => {
                             return(
-                                <div key={child.id}>
+                                <div key={child.id} className={styles.child}>
                                     <div>{child.author}</div>
                                     <div dangerouslySetInnerHTML={{ __html: child.text}}></div>
                                     <div>{child.date}</div>
                                 </div>
                             )
                         }) : null}
-                    </div> */}
+                    </div>
 
                 </div>
     )

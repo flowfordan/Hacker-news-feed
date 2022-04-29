@@ -8,7 +8,6 @@ const apiService = new APIService();
 export const ItemComments = (props) => {
     
     const {commentsIds} = props.commentsIds;
-    console.log(commentsIds)
     const [comments, setComments] = useState(null)
 
 
@@ -19,14 +18,12 @@ export const ItemComments = (props) => {
     useEffect(
         () => {
             if(commentsIds){
-                console.log('comments IDS', commentsIds)
                 Promise.all(
                     commentsIds.map(id => {return apiService.getRootComment(id)})
                 ).then(data => {
                     setComments(data)
                 })
             }
-            
         }
         ,[commentsIds])
 
@@ -39,20 +36,7 @@ export const ItemComments = (props) => {
         [])
 
 
-    const onAnswersShow = (parentId, childrenIds) => {
-        console.log('show childs:', childrenIds)
-        Promise.all(
-            childrenIds.map(id => {return apiService.getRootComment(id)})
-        ).then(data => {
-            //find parent id
-            const parentIdx = comments.findIndex(el => el.id === parentId)
-            //setComments(data)
-            setComments(prevData => [...prevData, comments[parentIdx].answers = data])
-            console.log(comments[parentIdx])
-            console.log('from Promise all', data)
-        })
-        
-    } 
+    
 
 
     let renderComments
@@ -69,7 +53,7 @@ export const ItemComments = (props) => {
         return(
             
             <div key={item.id} className={styles.commentWrapper}>
-                <Comment data={item} onAnswersShow={onAnswersShow}/>
+                <Comment data={item}/>
             </div>
             
         )

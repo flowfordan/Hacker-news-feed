@@ -9,7 +9,6 @@ export const StoryItem = (props) => {
 
     
     const {storyData} = props
-    console.log('item', storyData)
     
     const [isLoading, toggleLoading] = useState(true)
 

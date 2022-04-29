@@ -83,9 +83,8 @@ export const NewsItemPage = () => {
         </>
     
     
-    const PreloaderView = () => {
-        return (isLoading? <span>Loading</span> : null)
-    }
+    const preloaderView = isLoading? <span>Loading</span> : null
+    
 
     return(
         <div className={styles.pageWrapper}>
@@ -101,6 +100,7 @@ export const NewsItemPage = () => {
                 </div>
             </div>
             <div className={styles.itemWrapper}>
+                {preloaderView}
                 {renderView}
             </div>
         </div>
