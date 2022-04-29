@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { APIService } from '../../services/apiService';
 import { ItemComments } from '../ItemComments/ItemComments';
-import { NewsFeedItem } from '../NewsFeedItem/NewsFeedItem';
 import { StoryItem } from '../StoryItem/StoryItem';
 import styles from './NewsItemPage.module.css';
 
@@ -13,7 +12,10 @@ const apiService = new APIService();
 export const NewsItemPage = () => {
 
     //get id from url
-    const itemId = useParams().storyId
+    const itemId = useParams().storyId;
+
+    const [isLoading, toggleLoading] = useState(false);
+    const [isUpdatingComments, toggleUpdatingComments] = useState(false);
 
     const [storyData, setData] = useState({
         id: itemId,
@@ -27,6 +29,8 @@ export const NewsItemPage = () => {
 
 
     const getStoryData = () => {
+        toggleLoading(true);
+        toggleUpdatingComments(true);
         apiService.getStory(itemId)
             .then(data => {
                 setData({
@@ -38,11 +42,13 @@ export const NewsItemPage = () => {
                     title: data.title,
                     url: data.url 
                 })
-                
+                toggleLoading(false);
+                toggleUpdatingComments(false);
             })
     };
 
     const updComments = () => {
+        toggleUpdatingComments(true);
         apiService.getStory(itemId)
             .then(data => {
                 setData(storyData => {
@@ -50,6 +56,7 @@ export const NewsItemPage = () => {
                     ...storyData,
                     comments: data.comments, 
                 }})
+                toggleUpdatingComments(false);
                 
             })
     }
@@ -61,12 +68,28 @@ export const NewsItemPage = () => {
 
             //on unmount
             return () => {
+                //clear timer, clear comments api request
                 clearInterval(refreshTimer);  
             };
         },
         [])
 
     
+    
+    
+    
+
+    const RenderView = () => {
+        return (
+        <>
+            <StoryItem storyData={storyData}/>
+            <ItemComments commentsIds={storyData.comments}/>
+        </>)
+    }
+    
+    const PreloaderView = () => {
+        return (isLoading? <span>Loading</span> : <RenderView />)
+    }
 
     return(
         <div className={styles.pageWrapper}>
@@ -78,11 +101,11 @@ export const NewsItemPage = () => {
                     </button>
                 </Link>
                 <button onClick={updComments}>Update comments</button>
+                <div>{isUpdatingComments? 'updating...' : null}</div>
                 </div>
             </div>
             <div className={styles.itemWrapper}>
-                <StoryItem storyData={storyData}/>
-                <ItemComments commentsIds={storyData.comments}/>
+                <PreloaderView />
             </div>
         </div>
     )

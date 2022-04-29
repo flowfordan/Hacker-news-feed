@@ -13,11 +13,14 @@
 }
 
 .deskWrapper{
+    min-height: 100%;
     grid-area: desk;
     background-color: aquamarine;
 }
 
 .desk{
+    display: flex;
+    flex-direction: column;
     position: sticky;
     top: 0;
 }

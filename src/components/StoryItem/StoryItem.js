@@ -11,11 +11,6 @@ export const StoryItem = (props) => {
     const {storyData} = props
     console.log('item', storyData)
     
-    
-    //first it gets id from list component
-    //sets id
-    //makes api query to get data(title, author etc)
-    
     const [isLoading, toggleLoading] = useState(true)
 
 
