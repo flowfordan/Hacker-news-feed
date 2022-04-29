@@ -7,7 +7,7 @@ const apiService = new APIService();
 export const NewsFeedItem = (props) => {
 
     const {storyId} = props
-    
+    console.log('feed is working')
     
     //first it gets id from list component
     //sets id

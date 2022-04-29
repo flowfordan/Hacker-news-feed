@@ -13,9 +13,6 @@ export const NewsFeedPage = () => {
     const [storiesIds, setIds] = useState(null);
     const [isLoading, toggleLoading] = useState(false);
     
-
-    
-
     const loadStoriesIds = () => {
         toggleLoading(true) 
         apiService.getStoriesList()
@@ -31,9 +28,10 @@ export const NewsFeedPage = () => {
             loadStoriesIds();
             let refreshTimer = setInterval(() => loadStoriesIds(), 60000);
 
-            //on unmount
+            //on unmounting
             return () => {
-                clearInterval(refreshTimer);  
+                clearInterval(refreshTimer);
+                apiService.feedItemController.abort()  
             };
         }, 
         []
@@ -53,7 +51,7 @@ export const NewsFeedPage = () => {
     
     let renderList
     if(storiesIds){
-    renderList = storiesIds.map((item, idx) => {
+    renderList = storiesIds.map(item => {
         return (
         <Link key={item} to={`/story/${item}`}>
             <NewsFeedItem  storyId={item} extended={false}/>
@@ -61,14 +59,11 @@ export const NewsFeedPage = () => {
         )
     })}
     
-
+    //view when we dont have ANY news yet
     const PreloaderView = () => {
-        return (isLoading? <span>Loading stories</span> : null)
+        return (isLoading && !storiesIds? <span>Preparing stories</span> : null)
     }
-
-    
-    
-    
+   
 
     return(
         <div className={styles.feedWrapper}>

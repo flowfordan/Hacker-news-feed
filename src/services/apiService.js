@@ -27,11 +27,11 @@ export class APIService {
 
     //cancelTokenSource.cancel();
     //
-    itemController = new AbortController();
+    feedItemController = new AbortController();
     getStoryData = async(id) => {
         const storyUrl = `/item/${id}.json`;
         const response = await axios.get(`${this._baseUrl}${storyUrl}`
-        , { signal: this.itemController.signal })
+        , { signal: this.feedItemController.signal })
         
         if(response.status === 200){
             return this._transformStoryData(response.data)
@@ -41,7 +41,7 @@ export class APIService {
     getStory = async(id) => {
         const storyUrl = `/item/${id}.json`;
         const response = await axios.get(`${this._baseUrl}${storyUrl}`
-        , { signal: this.itemController.signal })
+        )
         
         if(response.status === 200){
             return this._transformStoryData(response.data)
@@ -51,7 +51,7 @@ export class APIService {
     getRootComment = async(id) => {
         const commentUrl = `/item/${id}.json`;
         const response = await axios.get(`${this._baseUrl}${commentUrl}`
-        , { signal: this.itemController.signal })
+        )
 
         
         if(response.status === 200){
