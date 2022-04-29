@@ -20,12 +20,13 @@ export const NewsItemPage = () => {
     const [storyData, setData] = useState({
         id: itemId,
         author: null,
-        comments: null,
         date: null,
         rating: 0,
         title: null,
         url: null
     })
+
+    const [commentsIdsData, setCommentsIdsData] = useState([])
 
 
     const getStoryData = () => {
@@ -36,29 +37,25 @@ export const NewsItemPage = () => {
                 setData({
                     id: data.id,
                     author: data.author,
-                    comments: data.comments,
                     date: data.date,
                     rating: data.rating,
                     title: data.title,
                     url: data.url 
-                })
+                });
+                setCommentsIdsData({commentsIds: data.commentsIds})
                 toggleLoading(false);
                 toggleUpdatingComments(false);
             })
     };
 
     const updComments = () => {
-        toggleUpdatingComments(true);
+        //toggleUpdatingComments(true);
         apiService.getStory(itemId)
             .then(data => {
-                setData(storyData => {
-                    return {
-                    ...storyData,
-                    comments: data.comments, 
-                }})
-                toggleUpdatingComments(false);
-                
-            })
+                setCommentsIdsData({commentsIds: data.commentsIds})
+            }
+            )
+                //toggleUpdatingComments(false);      
     }
 
     useEffect(
@@ -79,16 +76,15 @@ export const NewsItemPage = () => {
     
     
 
-    const RenderView = () => {
-        return (
+    const renderView = 
         <>
             <StoryItem storyData={storyData}/>
-            <ItemComments commentsIds={storyData.comments}/>
-        </>)
-    }
+            <ItemComments commentsIds={commentsIdsData}/>
+        </>
+    
     
     const PreloaderView = () => {
-        return (isLoading? <span>Loading</span> : <RenderView />)
+        return (isLoading? <span>Loading</span> : null)
     }
 
     return(
@@ -105,7 +101,7 @@ export const NewsItemPage = () => {
                 </div>
             </div>
             <div className={styles.itemWrapper}>
-                <PreloaderView />
+                {renderView}
             </div>
         </div>
     )

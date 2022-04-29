@@ -48,7 +48,7 @@ export const NewsFeedPage = () => {
         [storiesIds]
     )
         
-    
+    console.log('STORIES IDS', storiesIds)
     let renderList
     if(storiesIds){
     renderList = storiesIds.map(item => {

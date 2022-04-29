@@ -26,7 +26,7 @@ export const NewsFeedItem = (props) => {
                 setData({
                     id: data.id,
                     author: data.author,
-                    comments: data.comments,
+                    commentsIds: data.commentsIds,
                     date: data.date,
                     rating: data.rating,
                     title: data.title,
@@ -50,13 +50,15 @@ export const NewsFeedItem = (props) => {
         )
     }
 
-    const { author, date, rating, title} = storyData
+    
+    const { author, date, rating, title, commentsIds} = storyData
     return(
         
         <div className={styles.cardWrapper}>
             <span className={styles.title}>{title}</span>
             <span className={styles.rate}>{rating}</span>
             <span className={styles.author}>{author}</span>
+            <span className={styles.comments}>{commentsIds? commentsIds.length : '0'}</span>
             <span className={styles.date}>{date}</span>    
         </div>
         

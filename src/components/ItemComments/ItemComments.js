@@ -1,22 +1,21 @@
 import styles from './ItemComments.module.css';
 import { APIService } from '../../services/apiService';
 import { useEffect, useState } from 'react';
-import { unstable_composeClasses } from '@mui/material';
+import { Comment } from './Comment/Comment';
 
 const apiService = new APIService();
 
 export const ItemComments = (props) => {
     
-    const {commentsIds} = props
-
-
-    const [comments, setComments] = useState([])
-    const [answers, setAnswers] = useState([])
+    const {commentsIds} = props.commentsIds;
+    console.log(commentsIds)
+    const [comments, setComments] = useState(null)
 
 
     //get apiService for parent comments
     //when mounting - load comments
-    const commentArr = []
+    
+
     useEffect(
         () => {
             if(commentsIds){
@@ -27,8 +26,17 @@ export const ItemComments = (props) => {
                     setComments(data)
                 })
             }
+            
         }
         ,[commentsIds])
+
+        useEffect(() => {
+            //on unmounting
+            return () => {
+                console.log('UNMOUNT!!!!') 
+            };
+        },
+        [])
 
 
     const onAnswersShow = (parentId, childrenIds) => {
@@ -46,59 +54,28 @@ export const ItemComments = (props) => {
         
     } 
 
-    const ChildrenView = () => {
-        return(
-            <div>
-                Answers
-            </div>
-        )
-    }
 
     let renderComments
 
-        
-        if(comments.length > 0){
+    console.log(comments)
 
-        //sort by dateRaw
-        const sortedComments = [...comments].sort((a ,b) => {return b.dateRaw - a.dateRaw})
-        console.log(sortedComments)
-        renderComments = sortedComments.map(item => {
-            return(
-                <>
-                <div key={item.id} className={styles.commentWrapper}>
-                    <div className={styles.comment}>
-                        <div>{item.author}</div>
-                        <div dangerouslySetInnerHTML={{ __html: item.text}}></div>
-                        <div>{item.date}</div>
-                        <div 
-                        onClick={() => {onAnswersShow(item.id, item.children)}}
-                        className={styles.showAnswers}>
-                            {item.children? 'show answers': null}
-                        </div>
-                    </div>
-                    <div className={styles.children}>
-                        {item.answers? item.answers.map(child => {
-                            return(
-                                <div>
-                                    <div>{child.author}</div>
-                                    <div dangerouslySetInnerHTML={{ __html: child.text}}></div>
-                                    <div>{child.date}</div>
-                                </div>
-                            )
-                        }) : null}
-                    </div>
-                </div>
-                </>
-            )
-        })
-        }
-        
-        
-    
-    //onClick get api Service forr kids comments
-    
-    
+    if(comments){
 
+    //sort by dateRaw
+    //const sortedComments = [...comments]
+    //.sort((a ,b) => {return b.dateRaw - a.dateRaw})
+    //console.log(sortedComments)
+    renderComments = comments.map(item => {
+        return(
+            
+            <div key={item.id} className={styles.commentWrapper}>
+                <Comment data={item} onAnswersShow={onAnswersShow}/>
+            </div>
+            
+        )
+    })
+    }
+        
 
     if(!commentsIds){
 

@@ -3,7 +3,7 @@
     grid-template-areas: 
     "title title title title"
     "link link link link"
-    "author . date rate";
+    "author comments date rate";
     grid-template-columns: 1fr auto auto auto;
     background-color: antiquewhite;
     padding: 10px;
@@ -24,8 +24,15 @@
 
 .date{
     grid-area: date;
+    padding-left: 10px;
 }
 
 .rate{
     grid-area: rate;
+    padding-left: 10px;
+}
+
+.comments{
+    grid-area: comments;
+    padding-left: 10px;
 }

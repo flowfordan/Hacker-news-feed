@@ -64,7 +64,7 @@ export class APIService {
         return {
             author: data.by,
             id: data.id,
-            comments: data.kids,
+            commentsIds: data.kids,
             rating: data.score,
             date: timeConverter(unixTime),
             title: data.title,
@@ -82,6 +82,7 @@ export class APIService {
             text: decodeHtml(data.text),
             date: timeConverter(unixTime),
             deleted: data.deleted,
+            dead: data.dead,
             dateRaw: data.time,
             answers: null
         }
