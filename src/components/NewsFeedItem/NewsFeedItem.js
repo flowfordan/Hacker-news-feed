@@ -7,11 +7,7 @@ const apiService = new APIService();
 export const NewsFeedItem = (props) => {
 
     const {storyId} = props
-    console.log('feed is working')
     
-    //first it gets id from list component
-    //sets id
-    //makes api query to get data(title, author etc)
     const [storyData, setData] = useState({
         id: storyId,
         author: null,
@@ -25,7 +21,6 @@ export const NewsFeedItem = (props) => {
 
     useEffect(
         () => {
-
             apiService.getStoryData(storyId)
             .then(data => {
                 setData({
@@ -42,18 +37,16 @@ export const NewsFeedItem = (props) => {
         },
         [storyId])
     
-        //on unmount
-    useEffect(() => () => {
-        console.log('unmounting')
-        
-        // apiService.itemController.abort()
-        
-    }, [])
     
-
+    //loading view
     if(isLoading){
         return(
-            <div>Story is loading...</div>
+            <div className={styles.cardWrapper}>
+            <span className={styles.title}>title...</span>
+            <span className={styles.rate}>rate...</span>
+            <span className={styles.author}>author...</span>
+            <span className={styles.date}>date...</span>    
+        </div>
         )
     }
 

@@ -54,7 +54,7 @@ export const NewsFeedPage = () => {
     renderList = storiesIds.map(item => {
         return (
         <Link key={item} to={`/story/${item}`}>
-            <NewsFeedItem  storyId={item} extended={false}/>
+            <NewsFeedItem  storyId={item}/>
         </Link>
         )
     })}
