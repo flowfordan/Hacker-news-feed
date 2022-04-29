@@ -1,6 +1,5 @@
 import styles from './Comment.module.css';
 import { useEffect, useState } from 'react';
-import { unstable_composeClasses } from '@mui/material';
 import { APIService } from '../../../services/apiService';
 
 const apiService = new APIService();
@@ -11,17 +10,14 @@ export const Comment = (props) => {
 
     const {id, author, date, text, children} = props.data
     
-    const [childs, setChilds] = useState([])
+    const [childsData, setChildsData] = useState([])
     const [showChilds, toggleShowChilds] = useState(false)
 
     const onAnswersShow = (childrenIds) => {
-
-            console.log('show childs:', childrenIds)
             Promise.all(
                 childrenIds.map(id => {return apiService.getRootComment(id)})
             ).then(data => {
-                setChilds(data)
-                console.log('from Promise all', data)
+                setChildsData(data)
             })
     }
 
@@ -34,9 +30,6 @@ export const Comment = (props) => {
         ,
         [showChilds])
 
-
-    console.log(children)
-    console.log(showChilds)
 
     return(
         <div className={styles.commentWrapper}>
@@ -52,7 +45,7 @@ export const Comment = (props) => {
                     </div>
 
                     <div className={styles.children}>
-                        {showChilds? childs.map(child => {
+                        {showChilds? childsData.map(child => {
                             return(
                                 <div key={child.id} className={styles.child}>
                                     <div>{child.author}</div>

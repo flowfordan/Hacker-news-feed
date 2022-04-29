@@ -10,7 +10,7 @@ export class APIService {
     //get array of ids of stories
     //reduce it to 100(cut)
     listController = new AbortController();
-    getStoriesList = async() => {
+    getStoriesIds = async() => {
         
 
         const storiesUrl = `/newstories.json`;
@@ -34,6 +34,7 @@ export class APIService {
         , { signal: this.feedItemController.signal })
         
         if(response.status === 200){
+            console.log('getting list')
             return this._transformStoryData(response.data)
         }
     }

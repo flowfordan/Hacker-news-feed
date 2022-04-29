@@ -15,7 +15,7 @@ export const NewsFeedPage = () => {
     
     const loadStoriesIds = () => {
         toggleLoading(true) 
-        apiService.getStoriesList()
+        apiService.getStoriesIds()
         .then(data => {
             setIds(data)
             toggleLoading(false) 
@@ -30,6 +30,7 @@ export const NewsFeedPage = () => {
 
             //on unmounting
             return () => {
+                console.log('unmount feed')
                 clearInterval(refreshTimer);
                 apiService.feedItemController.abort()  
             };
@@ -48,10 +49,10 @@ export const NewsFeedPage = () => {
         [storiesIds]
     )
         
-    console.log('STORIES IDS', storiesIds)
     let renderList
     if(storiesIds){
-    renderList = storiesIds.map(item => {
+    const lazyList = storiesIds.slice(0, 20)
+    renderList = lazyList.map(item => {
         return (
         <Link key={item} to={`/story/${item}`}>
             <NewsFeedItem  storyId={item}/>

@@ -35,7 +35,7 @@ export const NewsFeedItem = (props) => {
                 toggleLoading(false)
             })
         },
-        [storyId])
+        [])
     
     
     //loading view

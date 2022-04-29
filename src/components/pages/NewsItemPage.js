@@ -13,6 +13,7 @@ export const NewsItemPage = () => {
 
     //get id from url
     const itemId = useParams().storyId;
+    console.log(itemId)
 
     const [isLoading, toggleLoading] = useState(false);
     const [isUpdatingComments, toggleUpdatingComments] = useState(false);
@@ -49,13 +50,14 @@ export const NewsItemPage = () => {
     };
 
     const updComments = () => {
-        //toggleUpdatingComments(true);
+        toggleUpdatingComments(true);
         apiService.getStory(itemId)
             .then(data => {
                 setCommentsIdsData({commentsIds: data.commentsIds})
+                toggleUpdatingComments(false);  
             }
             )
-                //toggleUpdatingComments(false);      
+                    
     }
 
     useEffect(

@@ -70,9 +70,8 @@ export const ItemComments = (props) => {
 
     return(
         <div>
-            <div>{`Comments (${7})`}</div>
+            <div>{`Comments (${commentsIds.length})`}</div>
             {renderComments}
-            <div>end</div>
         </div>
     )
 }
