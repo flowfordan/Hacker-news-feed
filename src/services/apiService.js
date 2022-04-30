@@ -10,16 +10,18 @@ export class APIService {
     //get array of ids of stories
     //reduce it to 100(cut)
     listController = new AbortController();
-    getStoriesIds = async() => {
+    getStoriesIds = async(currentPage, step) => {
         
-
+        console.log('PAGE in api', currentPage)
         const storiesUrl = `/newstories.json`;
         const response = await axios.get(`${this._baseUrl}${storiesUrl}`
         , { signal: this.listController.signal })
         
         if(response.status === 200){
             console.log('getting ids')
-            const limitedCount = response.data.slice(0, 100);
+            const end = currentPage * step;
+            console.log(`slice 0,${end}`)
+            const limitedCount = response.data.slice(0, end);
             return limitedCount
         }
     }

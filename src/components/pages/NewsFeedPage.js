@@ -9,24 +9,60 @@ const apiService = new APIService();
 
 
 export const NewsFeedPage = () => {
-
-    const [storiesIds, setIds] = useState(null);
-    const [isLoading, toggleLoading] = useState(false);
     
-    const loadStoriesIds = () => {
-        toggleLoading(true) 
-        apiService.getStoriesIds()
-        .then(data => {
-            setIds(data)
-            toggleLoading(false) 
-        })
+    const startPage = 1;
+    const loadStep = 20;
+    const maxItems = 100;
+    let scroll = 0;
+    const [storiesIds, setIds] = useState([]);
+    const [isLoading, toggleLoading] = useState(false);
+    const [currentPage, setPage] = useState(startPage);
+    
+    
+
+    const handleScroll = (e) => {
+        if(
+            window.innerHeight + e.target.documentElement.scrollTop + 1 >=
+            e.target.documentElement.scrollHeight
+        ){
+            console.log('bottom');
+            setPage(prevPage => prevPage + 1)
+            
+            
+            // loadStoriesIds(currentPage, loadStep);
+        }
+    }
+
+    useEffect(() => {
+        loadStoriesIds(currentPage, loadStep)
+        console.log(currentPage)
+    }
+        
+    ,[currentPage])
+
+
+    const loadStoriesIds = (page, step) => {
+        if(page <= maxItems/loadStep){
+           console.log('call LOAD page', page)
+            toggleLoading(true) 
+            apiService.getStoriesIds(page, step)
+            .then(data => {
+                console.log(data)
+                console.log('current page', page)
+                setIds(data);
+                toggleLoading(false);  
+            }) 
+        }
+        
     }
 
 
+    //on mounting
     useEffect(
         () => {
-            loadStoriesIds();
-            let refreshTimer = setInterval(() => loadStoriesIds(), 60000);
+            loadStoriesIds(startPage, loadStep);
+            let refreshTimer = setInterval(() => loadStoriesIds(currentPage, loadStep), 60000);
+            window.addEventListener("scroll", handleScroll);
 
             //on unmounting
             return () => {
@@ -47,12 +83,13 @@ export const NewsFeedPage = () => {
             }
         },
         [storiesIds]
-    )
+    );
+
         
     let renderList
     if(storiesIds){
-    const lazyList = storiesIds.slice(0, 20)
-    renderList = lazyList.map(item => {
+    
+    renderList = storiesIds.map(item => {
         return (
         <Link key={item} to={`/story/${item}`}>
             <NewsFeedItem  storyId={item}/>
@@ -71,7 +108,7 @@ export const NewsFeedPage = () => {
             <div className={styles.refreshWrap}>
                 <div className={styles.refreshSticky}>
                     <button className={styles.refreshBtn}
-                    onClick={loadStoriesIds}>
+                    onClick={() => loadStoriesIds(currentPage, loadStep)}>
                         Refresh
                     </button>
                     <div>{isLoading? 'fetch': null}</div>
@@ -79,10 +116,12 @@ export const NewsFeedPage = () => {
                 </div>
                 
             </div>
-            <ul className={styles.newsList}>
+            <div className={styles.newsList} >
                 <PreloaderView />
                 {renderList}
-            </ul>
+                {isLoading? <div>Preparing stories</div> : null}
+
+            </div>
         </div>
     )
 } 
