@@ -8,10 +8,16 @@ const apiService = new APIService();
 
 export const Comment = (props) => {
 
-    const {id, author, date, text, children} = props.data
+    const {author, date, text, children} = props.data;
     
-    const [childsData, setChildsData] = useState([])
-    const [showChilds, toggleShowChilds] = useState(false)
+    const [childsData, setChildsData] = useState([]);
+    const [showChilds, toggleShowChilds] = useState(false);
+
+    //num of comments - not dead or deleted
+    let finalAnswersNum = 0;
+    if(children){
+        finalAnswersNum = children.length;
+    }
 
     const onAnswersShow = (childrenIds) => {
             Promise.all(
@@ -30,6 +36,23 @@ export const Comment = (props) => {
         ,
         [showChilds])
 
+    const commentAnswers = childsData.map(child => {
+        if(child.dead || child.deleted){
+            finalAnswersNum -= 1
+            return null}
+        else{
+            return(
+            <div key={child.id} className={styles.child}>
+                <div>{child.author}</div>
+                <div dangerouslySetInnerHTML={{ __html: child.text}}></div>
+                <div>{child.date}</div>
+            </div>
+        )
+        }
+
+        
+    })
+
 
     return(
         <div className={styles.commentWrapper}>
@@ -38,22 +61,14 @@ export const Comment = (props) => {
                         <div>{author}</div>
                         <div dangerouslySetInnerHTML={{ __html: text}}></div>
                         <div>{date}</div>
-                            {children? <button onClick={() => toggleShowChilds(!showChilds)}
-                        className={styles.showAnswers}>{`show answers (${children.length})`}</button> 
+                            {finalAnswersNum > 0? <button onClick={() => toggleShowChilds(!showChilds)}
+                        className={styles.showAnswers}>{`show answers`}</button> 
                             : null}
                     
                     </div>
 
                     <div className={styles.children}>
-                        {showChilds? childsData.map(child => {
-                            return(
-                                <div key={child.id} className={styles.child}>
-                                    <div>{child.author}</div>
-                                    <div dangerouslySetInnerHTML={{ __html: child.text}}></div>
-                                    <div>{child.date}</div>
-                                </div>
-                            )
-                        }) : null}
+                        {showChilds? commentAnswers : null}
                     </div>
 
                 </div>

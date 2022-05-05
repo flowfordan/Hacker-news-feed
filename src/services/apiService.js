@@ -50,7 +50,8 @@ export class APIService {
         )
 
         
-        if(response.status === 200){
+        if(response.status === 200 ){
+            //check if comment is dead or deleted
             return this._transformCommentData(response.data)
         }
     }

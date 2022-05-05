@@ -8,7 +8,8 @@ const apiService = new APIService();
 export const ItemComments = (props) => {
     
     const {commentsIds} = props.commentsIds;
-    const [comments, setComments] = useState(null)
+    const [comments, setComments] = useState(null);
+    const [isLoading, toggleLoad] = useState(false)
 
 
     //get apiService for parent comments
@@ -18,10 +19,12 @@ export const ItemComments = (props) => {
     useEffect(
         () => {
             if(commentsIds){
+                toggleLoad(true)
                 Promise.all(
                     commentsIds.map(id => {return apiService.getRootComment(id)})
                 ).then(data => {
-                    setComments(data)
+                    setComments(data);
+                    toggleLoad(false)
                 })
             }
         }
@@ -46,20 +49,22 @@ export const ItemComments = (props) => {
     if(comments){
 
     //sort by dateRaw
-    //const sortedComments = [...comments]
-    //.sort((a ,b) => {return b.dateRaw - a.dateRaw})
+    const sortedComments = [...comments]
+    .sort((a ,b) => {return b.dateRaw - a.dateRaw})
     //console.log(sortedComments)
-    renderComments = comments.map(item => {
-        return(
-            
+    renderComments = sortedComments.map(item => {
+        if(item.deleted || item.dead){
+            return null
+        }
+        else{ return(
             <div key={item.id} className={styles.commentWrapper}>
-                <Comment data={item}/>
+                <Comment data={item} />
             </div>
-            
-        )
+        )}
     })
     }
         
+    const loadingView = isLoading? 'loading' : null;
 
     if(!commentsIds){
 
@@ -70,6 +75,7 @@ export const ItemComments = (props) => {
 
     return(
         <div>
+            {loadingView}
             {renderComments}
         </div>
     )
