@@ -15,7 +15,8 @@ export const NewsFeedItem = (props) => {
         date: null,
         rating: 0,
         title: null,
-        url: null
+        url: null,
+        commentsNum: 0,
     })
     const [isLoading, toggleLoading] = useState(true)
 
@@ -30,7 +31,8 @@ export const NewsFeedItem = (props) => {
                     date: data.date,
                     rating: data.rating,
                     title: data.title,
-                    url: data.url 
+                    url: data.url,
+                    commentsNum: data.commentsNum,
                 })
                 toggleLoading(false)
             })
@@ -51,14 +53,14 @@ export const NewsFeedItem = (props) => {
     }
 
     
-    const { author, date, rating, title, commentsIds} = storyData
+    const { author, date, rating, title, commentsIds, commentsNum} = storyData
     return(
         
         <div className={styles.cardWrapper}>
             <span className={styles.title}>{title}</span>
             <span className={styles.rate}>{rating}</span>
             <span className={styles.author}>{author}</span>
-            <span className={styles.comments}>{commentsIds? commentsIds.length : '0'}</span>
+            <span className={styles.comments}>{commentsIds? commentsNum : '0'}</span>
             <span className={styles.date}>{date}</span>    
         </div>
         

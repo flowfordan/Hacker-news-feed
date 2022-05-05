@@ -11,24 +11,18 @@ export class APIService {
     //reduce it to 100(cut)
     listController = new AbortController();
     getStoriesIds = async(currentPage, step) => {
-        
-        console.log('PAGE in api', currentPage)
         const storiesUrl = `/newstories.json`;
         const response = await axios.get(`${this._baseUrl}${storiesUrl}`
         , { signal: this.listController.signal })
         
         if(response.status === 200){
-            console.log('getting ids')
             const end = currentPage * step;
-            console.log(`slice 0,${end}`)
             const limitedCount = response.data.slice(0, end);
-            return limitedCount
+            return limitedCount;
         }
     }
 
 
-    //cancelTokenSource.cancel();
-    //
     feedItemController = new AbortController();
     getStoryData = async(id) => {
         const storyUrl = `/item/${id}.json`;
@@ -36,7 +30,6 @@ export class APIService {
         , { signal: this.feedItemController.signal })
         
         if(response.status === 200){
-            console.log('getting list')
             return this._transformStoryData(response.data)
         }
     }
@@ -91,7 +84,4 @@ export class APIService {
             answers: null
         }
     }
-
-    //get story data by Item component, each item gets id
-    //starts func getStoryData
 }

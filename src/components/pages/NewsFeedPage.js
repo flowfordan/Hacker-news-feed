@@ -13,11 +13,10 @@ export const NewsFeedPage = () => {
     const startPage = 1;
     const loadStep = 20;
     const maxItems = 100;
-    let scroll = 0;
+    const maxPage = maxItems/loadStep;
     const [storiesIds, setIds] = useState([]);
     const [isLoading, toggleLoading] = useState(false);
     const [currentPage, setPage] = useState(startPage);
-    
     
 
     const handleScroll = (e) => {
@@ -25,30 +24,26 @@ export const NewsFeedPage = () => {
             window.innerHeight + e.target.documentElement.scrollTop + 1 >=
             e.target.documentElement.scrollHeight
         ){
-            console.log('bottom');
-            setPage(prevPage => prevPage + 1)
-            
-            
-            // loadStoriesIds(currentPage, loadStep);
+            setPage(prevPage => prevPage + 1);
         }
     }
 
     useEffect(() => {
-        loadStoriesIds(currentPage, loadStep)
-        console.log(currentPage)
+        if(currentPage <= maxPage){
+            loadStoriesIds(currentPage, loadStep) 
+        }
     }
-        
     ,[currentPage])
 
 
     const loadStoriesIds = (page, step) => {
+        if(page > maxItems/loadStep){
+            page = maxItems/loadStep
+        }
         if(page <= maxItems/loadStep){
-           console.log('call LOAD page', page)
             toggleLoading(true) 
             apiService.getStoriesIds(page, step)
             .then(data => {
-                console.log(data)
-                console.log('current page', page)
                 setIds(data);
                 toggleLoading(false);  
             }) 
@@ -66,29 +61,17 @@ export const NewsFeedPage = () => {
 
             //on unmounting
             return () => {
-                console.log('unmount feed')
                 clearInterval(refreshTimer);
-                apiService.feedItemController.abort()  
+                apiService.feedItemController.abort();
+                document.removeEventListener("scroll", handleScroll);
             };
         }, 
         []
     )
 
-    useEffect(
-        () => {
-            if(!storiesIds){
-                toggleLoading(true)
-            }else{
-                toggleLoading(false) 
-            }
-        },
-        [storiesIds]
-    );
-
         
     let renderList
     if(storiesIds){
-    
     renderList = storiesIds.map(item => {
         return (
         <Link key={item} to={`/story/${item}`}>
@@ -98,9 +81,8 @@ export const NewsFeedPage = () => {
     })}
     
     //view when we dont have ANY news yet
-    const PreloaderView = () => {
-        return (isLoading && !storiesIds? <span>Preparing stories</span> : null)
-    }
+    const preloaderView = isLoading && !storiesIds? <span>Preparing stories</span> : null
+    
    
 
     return(
@@ -117,9 +99,11 @@ export const NewsFeedPage = () => {
                 
             </div>
             <div className={styles.newsList} >
-                <PreloaderView />
+                {preloaderView}
                 {renderList}
-                {isLoading? <div>Preparing stories</div> : null}
+                {isLoading? <div>Loading...</div> : null}
+                {storiesIds && storiesIds.length === maxItems? 
+                <div>That's all folks</div>: null}
 
             </div>
         </div>
