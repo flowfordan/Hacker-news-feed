@@ -71,7 +71,8 @@ export class APIService {
             rating: data.score,
             date: timeConverter(unixTime),
             title: data.title,
-            url: data.url
+            url: data.url,
+            commentsNum: data.descendants
         }
     }
 

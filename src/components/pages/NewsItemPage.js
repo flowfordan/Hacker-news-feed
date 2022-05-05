@@ -24,7 +24,8 @@ export const NewsItemPage = () => {
         date: null,
         rating: 0,
         title: null,
-        url: null
+        url: null,
+        commentsNum: 0
     })
 
     const [commentsIdsData, setCommentsIdsData] = useState([])
@@ -41,7 +42,8 @@ export const NewsItemPage = () => {
                     date: data.date,
                     rating: data.rating,
                     title: data.title,
-                    url: data.url 
+                    url: data.url,
+                    commentsNum: data.commentsNum 
                 });
                 setCommentsIdsData({commentsIds: data.commentsIds})
                 toggleLoading(false);
