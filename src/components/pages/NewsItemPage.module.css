@@ -7,8 +7,6 @@
 }
 
 .itemWrapper{
-    display: grid;
-    gap: 20px;
     grid-area: item;
 }
 

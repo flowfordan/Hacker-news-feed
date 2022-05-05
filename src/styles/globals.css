@@ -1,18 +1,27 @@
 html,
 body{
-    background-color: rgb(255, 250, 200);
+    background-color: #F5F5F5;
     margin: 0;
     font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: var(--black);
 }
 
 a{
   text-decoration: none;
+  color: inherit;
 }
 
 ul, li{
   margin: 0;
   padding: 0;
+}
+
+:root{
+  --black: #3E4B52;
+  --white: white;
+  --main-dist: 10px;
+  --grey-main: #C4C4C4;
 }
 

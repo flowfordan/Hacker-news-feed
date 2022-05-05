@@ -2,21 +2,22 @@
     display: grid;
     grid-template-areas: 
     "title title title title"
-    "link link link link"
     "author comments date rate";
     grid-template-columns: 1fr auto auto auto;
-    background-color: antiquewhite;
+    grid-template-rows: minmax(30px, 1fr) auto;
+    background-color: var(--white);
     padding: 10px;
-    border: 1px solid black;
+    border: 1px solid var(--grey-main);
+    border-radius: var(--main-dist);
+    margin-bottom: 10px;
 }
 
 .title{
     grid-area: title;
+    font-weight: 700;
+    font-size: 20px;
 }
 
-.link{
-    grid-area: link;
-}
 
 .author{
     grid-area: author;

@@ -1,3 +1,18 @@
 .cardWrapper{
     min-height: 200px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 
+    "title rating"
+    "url . "
+    "author date"
+    "comments .";
+    background-color: var(--white);
+    padding: 10px;
+}
+
+.title{
+    font-weight: 700;
+    font-size: 20px;
 }
