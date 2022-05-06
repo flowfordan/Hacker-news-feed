@@ -44,8 +44,6 @@ export const ItemComments = (props) => {
 
     let renderComments
 
-    console.log(comments)
-
     if(comments){
 
     //sort by dateRaw
@@ -67,9 +65,8 @@ export const ItemComments = (props) => {
     const loadingView = isLoading? 'loading' : null;
 
     if(!commentsIds){
-
         return(
-            <div>There are no comments yet</div>
+            <div className={styles.commentWrapper}>There are no comments yet</div>
         )
     }
 

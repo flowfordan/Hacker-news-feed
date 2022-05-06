@@ -1,6 +1,7 @@
 import styles from './Comment.module.css';
 import { useEffect, useState } from 'react';
 import { APIService } from '../../../services/apiService';
+import ArrowPic from '../../../assets/icons/arrow-down.svg'
 
 const apiService = new APIService();
 
@@ -43,9 +44,9 @@ export const Comment = (props) => {
         else{
             return(
             <div key={child.id} className={styles.child}>
-                <div>{child.author}</div>
+                <div className={styles.author}>{child.author}</div>
                 <div dangerouslySetInnerHTML={{ __html: child.text}}></div>
-                <div>{child.date}</div>
+                <div className={styles.date}>{child.date}</div>
             </div>
         )
         }
@@ -58,9 +59,9 @@ export const Comment = (props) => {
         <div className={styles.commentWrapper}>
 
                     <div className={styles.comment}>
-                        <div>{author}</div>
+                        <div className={styles.author}>{author}</div>
                         <div dangerouslySetInnerHTML={{ __html: text}}></div>
-                        <div>{date}</div>
+                        <div className={styles.date}>{date}</div>
                             {finalAnswersNum > 0? <button onClick={() => toggleShowChilds(!showChilds)}
                         className={styles.showAnswers}>{`show answers`}</button> 
                             : null}

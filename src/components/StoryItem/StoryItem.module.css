@@ -1,18 +1,51 @@
 .cardWrapper{
-    min-height: 200px;
+    min-height: 150px;
     display: grid;
-    gap: 20px;
+    gap: 10px;
     grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr 1fr auto;
     grid-template-areas: 
-    "title rating"
-    "url . "
-    "author date"
-    "comments .";
+    "title title rating"
+    "link . . "
+    "commentsCount author date";
+
     background-color: var(--white);
     padding: 10px;
+    border: 2px solid var(--primary);
+    border-radius: var(--main-dist);
 }
 
 .title{
     font-weight: 700;
     font-size: 20px;
+    grid-area: title;
+}
+
+.rating{
+    grid-area: rating;
+    display: flex;
+    justify-content: right;
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.link{
+    grid-area: link;
+    color: var(--primary);
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+.author{
+    grid-area: author;
+    color: var(--grey-dark);
+}
+
+.date{
+    grid-area: date;
+    color: var(--grey-dark);
+}
+
+.commentsCount{
+    grid-area: commentsCount;
 }

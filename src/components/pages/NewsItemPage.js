@@ -8,7 +8,6 @@ import styles from './NewsItemPage.module.css';
 const apiService = new APIService();
 
 
-
 export const NewsItemPage = () => {
 
     //get id from url

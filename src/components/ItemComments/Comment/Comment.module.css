@@ -1,8 +1,23 @@
+.comment, .child{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .children{
     margin-left: 30px;
 }
 
 .child{
-    background-color: aliceblue;
+    padding: 10px;
     margin-top: 10px;
+    border-bottom: 1px solid var(--grey-main);
+}
+
+.author{
+    color: var(--grey-dark);
+}
+
+.date{
+    color: var(--grey-dark);
 }

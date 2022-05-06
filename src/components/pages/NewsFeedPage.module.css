@@ -5,6 +5,7 @@
     grid-template-areas: 
     "refresh list";
     grid-template-columns: auto 1fr;
+    gap: 20px;
     
 }
 

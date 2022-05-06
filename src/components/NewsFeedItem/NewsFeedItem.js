@@ -60,7 +60,10 @@ export const NewsFeedItem = (props) => {
             <span className={styles.title}>{title}</span>
             <span className={styles.rate}>{rating}</span>
             <span className={styles.author}>{author}</span>
-            <span className={styles.comments}>{commentsIds? commentsNum : '0'}</span>
+            <span className={styles.comments}>
+                
+                {commentsIds? commentsNum : '0'} {`comments`}
+            </span>
             <span className={styles.date}>{date}</span>    
         </div>
         
