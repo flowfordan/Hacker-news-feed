@@ -1,6 +1,7 @@
 import styles from './Comment.module.css';
 import { useEffect, useState } from 'react';
 import { APIService } from '../../../services/apiService';
+import { Button } from '../../Button/Button';
 
 const apiService = new APIService();
 
@@ -61,8 +62,15 @@ export const Comment = (props) => {
                         <div className={styles.author}>{author}</div>
                         <div dangerouslySetInnerHTML={{ __html: text}}></div>
                         <div className={styles.date}>{date}</div>
-                            {finalAnswersNum > 0? <button onClick={() => toggleShowChilds(!showChilds)}
-                        className={styles.showAnswers}>{`show answers`}</button> 
+
+                            {finalAnswersNum > 0?
+                            <div className={styles.btnWrap}>
+                                <Button appearance={'ghost'} arrow={showChilds? 'down' : 'up'} 
+                                onClick={() => toggleShowChilds(!showChilds)}>
+                                    Show answers
+                                </Button>
+                            </div>
+                             
                             : null}
                     
                     </div>

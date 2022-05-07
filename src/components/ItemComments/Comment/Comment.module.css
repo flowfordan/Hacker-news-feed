@@ -21,3 +21,7 @@
 .date{
     color: var(--grey-dark);
 }
+
+.btnWrap{
+    max-width: 20%;
+}

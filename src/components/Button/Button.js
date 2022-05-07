@@ -12,11 +12,12 @@ export const Button = (props) => {
             [styles.ghost]: appearance === 'ghost',
         })}
         {...props}>
-            {children}
             {arrow !== 'none' && <span className={cn(styles.arrow, {
                 [styles.down]: arrow === 'down'
             })}> <img src={arrowIcon} alt='arrow' className={styles.img}></img>
                 </span>}
+            {children}
+            
         </button>
     );
     
