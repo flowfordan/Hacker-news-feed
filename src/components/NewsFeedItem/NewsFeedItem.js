@@ -44,10 +44,10 @@ export const NewsFeedItem = (props) => {
     if(isLoading){
         return(
             <div className={styles.cardWrapper}>
-            <span className={styles.title}>title...</span>
-            <span className={styles.rate}>rate...</span>
-            <span className={styles.author}>author...</span>
-            <span className={styles.date}>date...</span>    
+            <span className={styles.title}><div className={styles.itemPreloader}>.</div></span>
+            <span className={styles.rate}><div className={styles.itemPreloader}>.</div></span>
+            <span className={styles.author}><div className={styles.itemPreloader}>.</div></span>
+            <span className={styles.date}><div className={styles.itemPreloader}>.</div></span>    
         </div>
         )
     }

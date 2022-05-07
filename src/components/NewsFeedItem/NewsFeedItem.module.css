@@ -37,3 +37,10 @@
     grid-area: comments;
     padding-left: 10px;
 }
+
+.itemPreloader{
+    height: 70%;
+    width: 100%;
+    background-color: var(--grey-light);
+    color: var(--grey-light);
+}
