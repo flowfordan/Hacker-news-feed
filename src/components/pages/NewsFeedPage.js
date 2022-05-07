@@ -83,7 +83,10 @@ export const NewsFeedPage = () => {
     })}
     
     //view when we dont have ANY news yet
-    const preloaderView = isLoading && !storiesIds? <span>Preparing stories</span> : null
+    const preloaderView = isLoading && !storiesIds? <span className={styles.loaderWrap}>Preparing stories</span> : null;
+    const listScrollLoader = isLoading? <span className={styles.loaderWrap}><Spinner type={'large'}/></span> : null;
+    
+    
     
    
 
@@ -107,9 +110,9 @@ export const NewsFeedPage = () => {
             <div className={styles.newsList} >
                 {preloaderView}
                 {renderList}
-                {isLoading? <div>Loading...</div> : null}
+                {listScrollLoader}
                 {storiesIds && storiesIds.length === maxItems? 
-                <div>That's all folks</div>: null}
+                <div>That's all for now</div>: null}
 
             </div>
         </div>

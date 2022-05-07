@@ -36,3 +36,10 @@
     min-height: 50px;
     min-width: 120px;
 }
+
+.loaderWrap{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 40px;
+}
