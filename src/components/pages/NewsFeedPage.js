@@ -95,11 +95,6 @@ export const NewsFeedPage = () => {
                     onClick={() => loadStoriesIds(currentPage, loadStep)}>
                         Refresh Feed
                     </Button>
-                    <Button appearance={'ghost'} 
-                    arrow={'none'} 
-                    onClick={() => loadStoriesIds(currentPage, loadStep)}>
-                        Back
-                    </Button>
                     <div>{isLoading? 'fetch': null}</div>
 
                 </div>

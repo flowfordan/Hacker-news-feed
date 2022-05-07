@@ -11,6 +11,7 @@
 
 .newsList{
     grid-area: list;
+    padding-top: 5px;
 }
 
 .refreshWrap{

@@ -8,12 +8,12 @@
 
 .itemWrapper{
     grid-area: item;
+    padding-top: 5px;
 }
 
 .deskWrapper{
     min-height: 100%;
     grid-area: desk;
-    background-color: aquamarine;
 }
 
 .desk{
@@ -22,4 +22,5 @@
     position: sticky;
     top: 0;
     gap: 10px;
+    padding-top: 5px;
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { APIService } from '../../services/apiService';
+import { Button } from '../Button/Button';
 import { ItemComments } from '../ItemComments/ItemComments';
 import { StoryItem } from '../StoryItem/StoryItem';
 import styles from './NewsItemPage.module.css';
@@ -94,11 +95,13 @@ export const NewsItemPage = () => {
             <div className={styles.deskWrapper}>
                 <div className={styles.desk}>
                 <Link to='/'>
-                    <button>
+                    <Button appearance={'ghost'} arrow={'none'} >
                         Back
-                    </button>
+                    </Button>
                 </Link>
-                <button onClick={updComments}>Update comments</button>
+                <Button appearance={'primary'} arrow={'none'} onClick={updComments}>
+                    Update comments
+                </Button>
                 <div>{isUpdatingComments? 'updating...' : null}</div>
                 </div>
             </div>

@@ -9,7 +9,8 @@ export const ItemComments = (props) => {
     
     const {commentsIds} = props.commentsIds;
     const [comments, setComments] = useState(null);
-    const [isLoading, toggleLoad] = useState(false)
+    const [isLoading, toggleLoad] = useState(false);
+    let renderComments;
 
 
     //get apiService for parent comments
@@ -42,7 +43,7 @@ export const ItemComments = (props) => {
     
 
 
-    let renderComments
+    
 
     if(comments){
 
