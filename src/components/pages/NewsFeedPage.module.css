@@ -27,3 +27,12 @@
     position: sticky;
     top: 0;
 }
+
+.btnText{
+    visibility: hidden;
+}
+
+.btnWrap{
+    min-height: 50px;
+    min-width: 120px;
+}
