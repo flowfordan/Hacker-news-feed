@@ -3,6 +3,7 @@ import { NewsFeedItem } from '../NewsFeedItem/NewsFeedItem';
 import styles from './NewsFeedPage.module.css';
 import { APIService } from '../../services/apiService';
 import { Link } from 'react-router-dom';
+import { Button } from '../Button/Button';
 
 const apiService = new APIService();
 
@@ -89,10 +90,16 @@ export const NewsFeedPage = () => {
         <div className={styles.feedWrapper}>
             <div className={styles.refreshWrap}>
                 <div className={styles.refreshSticky}>
-                    <button className={styles.refreshBtn}
+                    <Button appearance={'primary'} 
+                    arrow={'none'} 
                     onClick={() => loadStoriesIds(currentPage, loadStep)}>
-                        Refresh
-                    </button>
+                        Refresh Feed
+                    </Button>
+                    <Button appearance={'ghost'} 
+                    arrow={'none'} 
+                    onClick={() => loadStoriesIds(currentPage, loadStep)}>
+                        Back
+                    </Button>
                     <div>{isLoading? 'fetch': null}</div>
 
                 </div>

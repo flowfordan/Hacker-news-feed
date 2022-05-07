@@ -15,8 +15,6 @@
 
 .refreshWrap{
     grid-area: refresh;
-    background-color: aqua;
-    
 }
 
 .refreshBtn{
@@ -24,6 +22,7 @@
 }
 
 .refreshSticky{
+    padding-top: 5px;
     position: sticky;
     top: 0;
 }

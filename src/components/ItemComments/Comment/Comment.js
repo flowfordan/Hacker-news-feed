@@ -1,7 +1,6 @@
 import styles from './Comment.module.css';
 import { useEffect, useState } from 'react';
 import { APIService } from '../../../services/apiService';
-import ArrowPic from '../../../assets/icons/arrow-down.svg'
 
 const apiService = new APIService();
 

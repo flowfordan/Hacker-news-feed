@@ -22,15 +22,10 @@ ul, li{
   padding: 0;
 }
 
-button{
-  border: none;
-  cursor: pointer;
-  background-color: var(--primary);
-}
 
 :root{
   --black: #2f3f47;
-  --white: white;
+  --white: rgb(255, 255, 255);
   
   --grey-main: #C4C4C4;
   --grey-light: #f8f8f8;
@@ -40,6 +35,7 @@ button{
   --primary-hover: #87b7e4;
 
   --secondary: #9fbdda;
+  --secondary-hover: #92aec9;
   
   --main-dist: 10px;
 }
