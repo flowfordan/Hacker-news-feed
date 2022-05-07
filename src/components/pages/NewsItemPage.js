@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { APIService } from '../../services/apiService';
 import { Button } from '../Button/Button';
 import { ItemComments } from '../ItemComments/ItemComments';
+import { Spinner } from '../Spinner/Spinner';
 import { StoryItem } from '../StoryItem/StoryItem';
 import styles from './NewsItemPage.module.css';
 
@@ -87,9 +88,8 @@ export const NewsItemPage = () => {
         </>
     
     
-    const preloaderView = isLoading? <span>Loading</span> : null
+    const preloaderView = isLoading? <span className={styles.loaderWrap}><Spinner type={'large'}/></span> : null
     
-
     return(
         <div className={styles.pageWrapper}>
             <div className={styles.deskWrapper}>
@@ -99,10 +99,14 @@ export const NewsItemPage = () => {
                         Back
                     </Button>
                 </Link>
-                <Button appearance={'primary'} arrow={'none'} onClick={updComments}>
-                    Update comments
+
+                <div className={styles.btnWrap}>
+                <Button appearance={'primary'} arrow={'none'} 
+                onClick={updComments} disabled={isUpdatingComments}
+                isLoading={isUpdatingComments}>
+                    Update
                 </Button>
-                <div>{isUpdatingComments? 'updating...' : null}</div>
+                </div>
                 </div>
             </div>
             <div className={styles.itemWrapper}>

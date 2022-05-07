@@ -12,3 +12,11 @@
 .showAnswers{
     color: brown;
 }
+
+
+.loaderWrap{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 40px;
+}

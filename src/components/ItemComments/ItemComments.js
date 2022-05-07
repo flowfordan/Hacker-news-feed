@@ -2,6 +2,7 @@ import styles from './ItemComments.module.css';
 import { APIService } from '../../services/apiService';
 import { useEffect, useState } from 'react';
 import { Comment } from './Comment/Comment';
+import { Spinner } from '../Spinner/Spinner';
 
 const apiService = new APIService();
 
@@ -62,8 +63,10 @@ export const ItemComments = (props) => {
         )}
     })
     }
-        
-    const loadingView = isLoading? 'loading' : null;
+    
+    
+
+    const loadingView = isLoading && !comments? <span className={styles.loaderWrap}><Spinner type={'large'}/></span> : null;
 
     if(!commentsIds){
         return(
