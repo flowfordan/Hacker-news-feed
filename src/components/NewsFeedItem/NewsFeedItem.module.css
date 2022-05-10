@@ -10,6 +10,14 @@
     border: 1px solid var(--primary);
     border-radius: var(--main-dist);
     margin-bottom: 10px;
+    transition: all 0.2s;
+}
+
+.cardWrapper:hover{
+    background-color: var(--grey-light);
+    box-shadow: 1px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    
 }
 
 .title{
@@ -31,6 +39,8 @@
 .rate{
     grid-area: rate;
     padding-left: 10px;
+    color: var(--primary);
+    font-weight: 700;
 }
 
 .comments{
