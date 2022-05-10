@@ -12,7 +12,6 @@
 
 .appHeader{
   grid-area: head;
-  padding: 20px;
 }
 
 .appBody{

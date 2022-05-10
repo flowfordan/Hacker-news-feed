@@ -1,0 +1,22 @@
+.headWrapper{
+    background-color: var(--secondary);
+    padding: 8px;
+    color: var(--white);
+
+    display: grid;
+    grid-template-areas: "logo stories credit";
+    grid-template-columns: auto 1fr auto;
+}
+
+.logo{
+    font-weight: 700;
+}
+
+.stories{
+    padding-left: 10px;
+
+}
+
+.credit{
+
+}
