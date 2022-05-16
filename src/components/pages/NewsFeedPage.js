@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { NewsFeedItem } from '../NewsFeedItem/NewsFeedItem';
 import styles from './NewsFeedPage.module.css';
 import { APIService } from '../../services/apiService';
@@ -8,18 +8,39 @@ import { Spinner } from '../Spinner/Spinner';
 
 const apiService = new APIService();
 
-
-
 export const NewsFeedPage = () => {
     
     const startPage = 1;
     const loadStep = 20;
     const maxItems = 100;
     const maxPage = maxItems/loadStep;
+
+    let renderList;
+
     const [storiesIds, setIds] = useState([]);
     const [isLoading, toggleLoading] = useState(false);
     const [currentPage, setPage] = useState(startPage);
-    
+        
+    const loadStoriesIds = useCallback(
+        (page, step) => {
+            let pageToLoad = page;
+            if(pageToLoad > maxPage){
+                pageToLoad = maxPage;
+            }
+            if(pageToLoad <= maxPage){
+                toggleLoading(true);
+                console.log('loadStories ids', pageToLoad) 
+                apiService.getStoriesIds(pageToLoad, step)
+                .then(data => {
+                    setIds(data);
+                    toggleLoading(false);  
+                }) 
+            }
+        },
+        [currentPage]
+    )
+
+   
 
     const handleScroll = (e) => {
         if(
@@ -28,36 +49,20 @@ export const NewsFeedPage = () => {
         ){
             setPage(prevPage => prevPage + 1);
         }
-    }
+    };
 
     useEffect(() => {
+        console.log('START', currentPage, maxPage, loadStoriesIds)
         if(currentPage <= maxPage){
             loadStoriesIds(currentPage, loadStep) 
         }
     }
-    ,[currentPage, maxPage])
-
-
-    const loadStoriesIds = (page, step) => {
-        if(page > maxItems/loadStep){
-            page = maxItems/loadStep
-        }
-        if(page <= maxItems/loadStep){
-            toggleLoading(true) 
-            apiService.getStoriesIds(page, step)
-            .then(data => {
-                setIds(data);
-                toggleLoading(false);  
-            }) 
-        }
-        
-    }
+    ,[currentPage, maxPage, loadStoriesIds]);
 
 
     //on mounting
     useEffect(
         () => {
-            loadStoriesIds(startPage, loadStep);
             let refreshTimer = setInterval(() => loadStoriesIds(currentPage, loadStep), 60000);
             window.addEventListener("scroll", handleScroll);
 
@@ -72,7 +77,7 @@ export const NewsFeedPage = () => {
     )
 
         
-    let renderList
+    
     if(storiesIds){
     renderList = storiesIds.map(item => {
         return (
@@ -85,10 +90,6 @@ export const NewsFeedPage = () => {
     //view when we dont have ANY news yet
     const preloaderView = isLoading && !storiesIds? <span className={styles.loaderWrap}>Preparing stories</span> : null;
     const listScrollLoader = isLoading? <span className={styles.loaderWrap}><Spinner type={'large'}/></span> : null;
-    
-    
-    
-   
 
     return(
         <div className={styles.feedWrapper}>
