@@ -3,9 +3,14 @@ import { Routes, Route } from 'react-router-dom';
 import { NewsFeedPage } from './pages/NewsFeedPage';
 import { NewsItemPage } from './pages/NewsItemPage';
 import { Header } from './Header/Header';
+import { APIService } from '../services/apiService';
+import { APIServiceContext } from '../context/apiContext';
+
+const apiService = new APIService();
 
 const App = () => {
   return (
+    <APIServiceContext.Provider value={apiService}>
     <div className={styles.appWrapper}>
       <div className={styles.appHeader}>
         <Header />
@@ -18,6 +23,7 @@ const App = () => {
         </Routes>
       </div>
     </div>
+    </APIServiceContext.Provider>
   );
 }
 

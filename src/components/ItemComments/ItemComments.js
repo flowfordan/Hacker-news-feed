@@ -1,12 +1,13 @@
 import styles from './ItemComments.module.css';
-import { APIService } from '../../services/apiService';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Comment } from './Comment/Comment';
 import { Spinner } from '../Spinner/Spinner';
+import { APIServiceContext } from '../../context/apiContext';
 
-const apiService = new APIService();
 
 export const ItemComments = (props) => {
+
+    const apiService = useContext(APIServiceContext);
     
     const {commentsIds} = props.commentsIds;
     const [comments, setComments] = useState(null);
@@ -39,12 +40,6 @@ export const ItemComments = (props) => {
             };
         },
         [])
-
-
-    
-
-
-    
 
     if(comments){
 

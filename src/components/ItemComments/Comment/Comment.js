@@ -1,14 +1,12 @@
 import styles from './Comment.module.css';
-import { useEffect, useState } from 'react';
-import { APIService } from '../../../services/apiService';
+import { useEffect, useState, useContext } from 'react';
 import { Button } from '../../Button/Button';
-
-const apiService = new APIService();
-
+import { APIServiceContext } from '../../../context/apiContext';
 
 
 export const Comment = (props) => {
 
+    const apiService = useContext(APIServiceContext)
     const {author, date, text, children} = props.data;
     
     const [childsData, setChildsData] = useState([]);

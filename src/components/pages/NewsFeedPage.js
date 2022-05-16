@@ -1,15 +1,15 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { NewsFeedItem } from '../NewsFeedItem/NewsFeedItem';
 import styles from './NewsFeedPage.module.css';
-import { APIService } from '../../services/apiService';
 import { Link } from 'react-router-dom';
 import { Button } from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
+import { APIServiceContext } from '../../context/apiContext';
 
-const apiService = new APIService();
 
 export const NewsFeedPage = () => {
     
+    const apiService = useContext(APIServiceContext)
     const startPage = 1;
     const loadStep = 20;
     const maxItems = 100;
@@ -69,7 +69,7 @@ export const NewsFeedPage = () => {
             //on unmounting
             return () => {
                 clearInterval(refreshTimer);
-                apiService.feedItemController.abort();
+                //apiService.feedItemController.abort();
                 document.removeEventListener("scroll", handleScroll);
             };
         }, 

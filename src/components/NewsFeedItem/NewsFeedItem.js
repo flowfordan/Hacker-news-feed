@@ -1,12 +1,13 @@
 import styles from './NewsFeedItem.module.css';
-import { APIService } from '../../services/apiService';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { APIServiceContext } from '../../context/apiContext';
 
-const apiService = new APIService();
+
 
 export const NewsFeedItem = (props) => {
 
-    const {storyId} = props
+    const apiService = useContext(APIServiceContext);
+    const {storyId} = props;
     
     const [storyData, setData] = useState({
         id: storyId,

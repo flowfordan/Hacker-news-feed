@@ -1,17 +1,16 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { APIService } from '../../services/apiService';
 import { Button } from '../Button/Button';
 import { ItemComments } from '../ItemComments/ItemComments';
 import { Spinner } from '../Spinner/Spinner';
 import { StoryItem } from '../StoryItem/StoryItem';
 import styles from './NewsItemPage.module.css';
-
-const apiService = new APIService();
+import { APIServiceContext } from '../../context/apiContext';
 
 
 export const NewsItemPage = () => {
-
+    
+    const apiService = useContext(APIServiceContext);
     //get id from url
     const itemId = useParams().storyId;
     console.log(itemId)
