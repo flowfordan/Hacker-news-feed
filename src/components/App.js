@@ -5,11 +5,6 @@ import { NewsItemPage } from './pages/NewsItemPage';
 import { Header } from './Header/Header';
 
 const App = () => {
-
-
-
-  
-  
   return (
     <div className={styles.appWrapper}>
       <div className={styles.appHeader}>

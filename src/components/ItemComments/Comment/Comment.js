@@ -66,7 +66,7 @@ export const Comment = (props) => {
                             {finalAnswersNum > 0?
                             <div className={styles.btnWrap}>
                                 <Button appearance={'ghost'} arrow={showChilds? 'down' : 'up'} 
-                                onClick={() => toggleShowChilds(!showChilds)}>
+                                onClick={() => toggleShowChilds(!showChilds)} isLoading={false}>
                                     Show answers
                                 </Button>
                             </div>

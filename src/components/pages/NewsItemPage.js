@@ -95,7 +95,7 @@ export const NewsItemPage = () => {
             <div className={styles.deskWrapper}>
                 <div className={styles.desk}>
                 <Link to='/'>
-                    <Button appearance={'ghost'} arrow={'none'} >
+                    <Button appearance={'ghost'} arrow={'none'} isLoading={false}>
                         Back
                     </Button>
                 </Link>

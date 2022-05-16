@@ -35,7 +35,7 @@ export const NewsFeedPage = () => {
             loadStoriesIds(currentPage, loadStep) 
         }
     }
-    ,[currentPage])
+    ,[currentPage, maxPage])
 
 
     const loadStoriesIds = (page, step) => {
