@@ -9,6 +9,7 @@ import { APIServiceContext } from '../context/apiContext';
 const apiService = new APIService();
 
 const App = () => {
+  //topstories, /beststories, newstories
   return (
     <APIServiceContext.Provider value={apiService}>
     <div className={styles.appWrapper}>
@@ -18,6 +19,7 @@ const App = () => {
       <div className={styles.appBody}>
         <Routes>
           <Route path='/' element={<NewsFeedPage />}/>
+          <Route path='/:storiesType' element={<NewsFeedPage />}/>
           <Route path='/story/:storyId' element={<NewsItemPage />}/>
           <Route path='*' element={<div>404</div>}/>
         </Routes>

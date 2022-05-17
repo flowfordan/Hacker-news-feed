@@ -5,15 +5,24 @@ import { Link } from 'react-router-dom';
 import { Button } from '../Button/Button';
 import { Spinner } from '../Spinner/Spinner';
 import { APIServiceContext } from '../../context/apiContext';
+import { useParams } from 'react-router-dom';
 
 
 export const NewsFeedPage = () => {
     
+    //get url
+    //4 types: home, new, top, best
+    //depending on page - assign 
+    const {storiesType} = useParams();
     const apiService = useContext(APIServiceContext)
     const startPage = 1;
     const loadStep = 20;
     const maxItems = 100;
     const maxPage = maxItems/loadStep;
+
+    const getStoriesData = (storiesType, pageToLoad, step) => {
+        return apiService.getStoriesIds(storiesType, pageToLoad, step)
+    };
 
     let renderList;
 
@@ -30,7 +39,7 @@ export const NewsFeedPage = () => {
             if(pageToLoad <= maxPage){
                 toggleLoading(true);
                 console.log('loadStories ids', pageToLoad) 
-                apiService.getStoriesIds(pageToLoad, step)
+                getStoriesData(storiesType, pageToLoad, step)
                 .then(data => {
                     setIds(data);
                     toggleLoading(false);  
