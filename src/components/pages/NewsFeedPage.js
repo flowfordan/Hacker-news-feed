@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState , useRef} from 'react';
 import { NewsFeedItem } from '../NewsFeedItem/NewsFeedItem';
 import styles from './NewsFeedPage.module.css';
 import { Link } from 'react-router-dom';
@@ -21,8 +21,6 @@ export const NewsFeedPage = () => {
     const maxItems = 100;
     const maxPage = maxItems/loadStep;
 
-    
-
     let renderList;
 
     const [storiesIds, setIds] = useState([]);
@@ -31,6 +29,7 @@ export const NewsFeedPage = () => {
         
     const getStoriesData = (type, pageToLoad, step) => {
         return apiService.getStoriesIds(type, pageToLoad, step)
+        
     };
 
     const loadStoriesIds = useCallback(
@@ -72,8 +71,29 @@ export const NewsFeedPage = () => {
     ,[currentPage, maxPage, loadStoriesIds, storiesType]);
 
 
+
+    const intervalRef1 = useRef(null);
+    const intervalRef2 = useRef(null);
+    console.log(intervalRef1.current)
     useEffect(() => {
-        setPage(startPage)
+        //start timer 2
+        //if timer 1 - clear
+        console.log(intervalRef1)
+        console.log(intervalRef2)
+        if(intervalRef1.current){
+            clearInterval(intervalRef1.current);
+            clearInterval(intervalRef2.current);
+            intervalRef2.current = setInterval(() => loadStoriesIds(storiesType, currentPage, loadStep), 60000);
+            // intervalRef2.current = timer2
+        }
+        // else if(intervalRef2.current){
+        //     clearInterval(intervalRef2.current);
+        //     clearInterval(intervalRef1.current);
+        //     intervalRef1.current = setInterval(() => console.log('timer1', storiesType), 2000);
+        // }
+        else if(!intervalRef1.current && !intervalRef2.current){
+            intervalRef1.current = setInterval(() => loadStoriesIds(storiesType, currentPage, loadStep), 60000);
+        }
     },
     [storiesType])
 
