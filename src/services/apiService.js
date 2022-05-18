@@ -12,7 +12,7 @@ export class APIService {
     listController = new AbortController();
     getStoriesIds = async(storiesType = 'newstories', page, step) => {
         const storiesUrl = `/${storiesType}.json`;
-        ///topstories, /beststories, newstories
+        // /topstories, /beststories, newstories
 
         const response = await axios.get(`${this._baseUrl}${storiesUrl}`
         , { signal: this.listController.signal })

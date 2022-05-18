@@ -14,15 +14,14 @@ export const NewsFeedPage = () => {
     //4 types: home, new, top, best
     //depending on page - assign 
     const {storiesType} = useParams();
+    console.log('render')
     const apiService = useContext(APIServiceContext)
     const startPage = 1;
     const loadStep = 20;
     const maxItems = 100;
     const maxPage = maxItems/loadStep;
 
-    const getStoriesData = (storiesType, pageToLoad, step) => {
-        return apiService.getStoriesIds(storiesType, pageToLoad, step)
-    };
+    
 
     let renderList;
 
@@ -30,8 +29,12 @@ export const NewsFeedPage = () => {
     const [isLoading, toggleLoading] = useState(false);
     const [currentPage, setPage] = useState(startPage);
         
+    const getStoriesData = (type, pageToLoad, step) => {
+        return apiService.getStoriesIds(type, pageToLoad, step)
+    };
+
     const loadStoriesIds = useCallback(
-        (page, step) => {
+        (type, page, step) => {
             let pageToLoad = page;
             if(pageToLoad > maxPage){
                 pageToLoad = maxPage;
@@ -39,7 +42,7 @@ export const NewsFeedPage = () => {
             if(pageToLoad <= maxPage){
                 toggleLoading(true);
                 console.log('loadStories ids', pageToLoad) 
-                getStoriesData(storiesType, pageToLoad, step)
+                getStoriesData(type, pageToLoad, step)
                 .then(data => {
                     setIds(data);
                     toggleLoading(false);  
@@ -63,16 +66,22 @@ export const NewsFeedPage = () => {
     useEffect(() => {
         console.log('START', currentPage, maxPage, loadStoriesIds)
         if(currentPage <= maxPage){
-            loadStoriesIds(currentPage, loadStep) 
+            loadStoriesIds(storiesType, currentPage, loadStep) 
         }
     }
-    ,[currentPage, maxPage, loadStoriesIds]);
+    ,[currentPage, maxPage, loadStoriesIds, storiesType]);
+
+
+    useEffect(() => {
+        setPage(startPage)
+    },
+    [storiesType])
 
 
     //on mounting
     useEffect(
         () => {
-            let refreshTimer = setInterval(() => loadStoriesIds(currentPage, loadStep), 60000);
+            let refreshTimer = setInterval(() => loadStoriesIds(storiesType, currentPage, loadStep), 60000);
             window.addEventListener("scroll", handleScroll);
 
             //on unmounting
@@ -108,7 +117,7 @@ export const NewsFeedPage = () => {
                     <div className={styles.btnWrap}>
                     <Button appearance={'primary'} 
                     arrow={'none'} 
-                    onClick={() => loadStoriesIds(currentPage, loadStep)} 
+                    onClick={() => loadStoriesIds(storiesType, currentPage, loadStep)} 
                     isLoading={isLoading} disabled={isLoading}>
                         Refresh Feed
                     </Button>
