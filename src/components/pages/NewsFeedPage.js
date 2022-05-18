@@ -27,13 +27,13 @@ export const NewsFeedPage = () => {
     const [isLoading, toggleLoading] = useState(false);
     const [currentPage, setPage] = useState(startPage);
         
-    const getStoriesData = (type, pageToLoad, step) => {
-        return apiService.getStoriesIds(type, pageToLoad, step)
+    const getStoriesData = (type, page) => {
+        return apiService.getStoriesIds(type, page, loadStep)
         
     };
 
     const loadStoriesIds = useCallback(
-        (type, page, step) => {
+        (type, page) => {
             let pageToLoad = page;
             if(pageToLoad > maxPage){
                 pageToLoad = maxPage;
@@ -41,7 +41,7 @@ export const NewsFeedPage = () => {
             if(pageToLoad <= maxPage){
                 toggleLoading(true);
                 console.log('loadStories ids', pageToLoad) 
-                getStoriesData(type, pageToLoad, step)
+                getStoriesData(type, pageToLoad)
                 .then(data => {
                     setIds(data);
                     toggleLoading(false);  
@@ -58,14 +58,14 @@ export const NewsFeedPage = () => {
             window.innerHeight + e.target.documentElement.scrollTop + 1 >=
             e.target.documentElement.scrollHeight
         ){
-            setPage(prevPage => prevPage + 1);
+            setPage(prevPage => prevPage >= maxPage? prevPage : prevPage + 1);
         }
     };
 
     useEffect(() => {
-        console.log('START', currentPage, maxPage, loadStoriesIds)
+        console.log('START', currentPage, maxPage, storiesType)
         if(currentPage <= maxPage){
-            loadStoriesIds(storiesType, currentPage, loadStep) 
+            loadStoriesIds(storiesType, currentPage) 
         }
     }
     ,[currentPage, maxPage, loadStoriesIds, storiesType]);
@@ -74,26 +74,23 @@ export const NewsFeedPage = () => {
 
     const intervalRef1 = useRef(null);
     const intervalRef2 = useRef(null);
-    console.log(intervalRef1.current)
+ 
     useEffect(() => {
-        //start timer 2
-        //if timer 1 - clear
-        console.log(intervalRef1)
-        console.log(intervalRef2)
+        setPage(startPage)
         if(intervalRef1.current){
             clearInterval(intervalRef1.current);
             clearInterval(intervalRef2.current);
-            intervalRef2.current = setInterval(() => loadStoriesIds(storiesType, currentPage, loadStep), 60000);
-            // intervalRef2.current = timer2
+            intervalRef2.current = setInterval(() => loadStoriesIds(storiesType, currentPage), 60000);
         }
-        // else if(intervalRef2.current){
-        //     clearInterval(intervalRef2.current);
-        //     clearInterval(intervalRef1.current);
-        //     intervalRef1.current = setInterval(() => console.log('timer1', storiesType), 2000);
-        // }
         else if(!intervalRef1.current && !intervalRef2.current){
-            intervalRef1.current = setInterval(() => loadStoriesIds(storiesType, currentPage, loadStep), 60000);
+            intervalRef1.current = setInterval(() => loadStoriesIds(storiesType, currentPage), 60000);
         }
+
+        //on unmounting
+        return () => {
+            clearInterval(intervalRef1.current);
+            clearInterval(intervalRef2.current);
+        };
     },
     [storiesType])
 
@@ -101,12 +98,10 @@ export const NewsFeedPage = () => {
     //on mounting
     useEffect(
         () => {
-            let refreshTimer = setInterval(() => loadStoriesIds(storiesType, currentPage, loadStep), 60000);
             window.addEventListener("scroll", handleScroll);
 
             //on unmounting
             return () => {
-                clearInterval(refreshTimer);
                 //apiService.feedItemController.abort();
                 document.removeEventListener("scroll", handleScroll);
             };
@@ -127,6 +122,7 @@ export const NewsFeedPage = () => {
     
     //view when we dont have ANY news yet
     const preloaderView = isLoading && !storiesIds? <span className={styles.loaderWrap}>Preparing stories</span> : null;
+    //loader for scrolling
     const listScrollLoader = isLoading? <span className={styles.loaderWrap}><Spinner type={'large'}/></span> : null;
 
     return(
@@ -137,7 +133,7 @@ export const NewsFeedPage = () => {
                     <div className={styles.btnWrap}>
                     <Button appearance={'primary'} 
                     arrow={'none'} 
-                    onClick={() => loadStoriesIds(storiesType, currentPage, loadStep)} 
+                    onClick={() => loadStoriesIds(storiesType, currentPage)} 
                     isLoading={isLoading} disabled={isLoading}>
                         Refresh Feed
                     </Button>
