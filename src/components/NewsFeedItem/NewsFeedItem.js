@@ -25,7 +25,8 @@ export const NewsFeedItem = (props) => {
         () => {
             apiService.getStoryData(storyId)
             .then(data => {
-                setData({
+             
+                  setData({
                     id: data.id,
                     author: data.author,
                     commentsIds: data.commentsIds,
@@ -34,7 +35,8 @@ export const NewsFeedItem = (props) => {
                     title: data.title,
                     url: data.url,
                     commentsNum: data.commentsNum,
-                })
+                })  
+           
                 toggleLoading(false)
             })
         },
